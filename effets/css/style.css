@@ -1,0 +1,106 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 40px 20px;
+  background: #f4f7fb;
+  color: #222;
+}
+
+/* ---------- Boutons ---------- */
+.boutons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+/* 1. Style de base commun */
+.boutons button {
+  padding: 12px 24px;
+  background-color: #2E75B6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* 2. b1 : fond plus foncé en 0,2 s */
+.b1 { transition: background-color 0.2s; }
+.b1:hover { background-color: #1F3864; }
+
+/* 3. b2 : monte de 4px + ombre */
+.b2 { transition: transform 0.2s, box-shadow 0.2s; }
+.b2:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* 4. b3 : +10 % au survol, 95 % au clic */
+.b3 { transition: transform 0.2s; }
+.b3:hover { transform: scale(1.1); }
+.b3:active { transform: scale(0.95); }
+
+/* 5. b4 : fond blanc + bordure bleue ; texte décalé de 0,1 s */
+.boutons .b4 {
+  background-color: #fff;
+  color: #2E75B6;
+  border: 2px solid #2E75B6;
+  transition: background-color 0.3s, color 0.3s 0.1s;
+}
+.boutons .b4:hover {
+  background-color: #2E75B6;
+  color: #fff;
+}
+
+/* ---------- Offres ---------- */
+/* 6. Grille */
+.offres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.offre {
+  position: relative;
+  background: #fff;
+  padding: 32px 24px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.offre:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.2);
+}
+
+.choisir {
+  color: #2E75B6;
+  font-weight: bold;
+  text-decoration: none;
+}
+.fleche {
+  display: inline-block; /* obligatoire pour que transform fonctionne */
+  transition: transform 0.3s ease-out;
+}
+.offre:hover .fleche { transform: translateX(5px); }
+
+/* 7. Badge en haut à droite, incliné puis redressé */
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #e53935;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  transform: rotate(-10deg);
+  transition: transform 0.3s ease-out;
+}
+.offre:hover .badge { transform: rotate(0deg); }

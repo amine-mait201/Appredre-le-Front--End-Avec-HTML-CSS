@@ -1,0 +1,110 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0 20px 40px;
+  background: #f4f7fb;
+  overflow-x: hidden;
+}
+
+/* 1. Alerte : glisse depuis le haut en 0,5 s */
+@keyframes glisser {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+.alerte {
+  background: #2E75B6;
+  color: #fff;
+  padding: 14px;
+  text-align: center;
+  margin: 0 -20px 30px;
+  animation: glisser 0.5s ease-out;
+}
+
+/* 2. Cercle de chargement : 0,8 s par tour, vitesse constante */
+@keyframes tourner {
+  to { transform: rotate(360deg); }
+}
+.chargement {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #d5dde8;
+  border-top-color: #2E75B6;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  animation: tourner 0.8s linear infinite;
+}
+
+/* 3. Indicateur « en train d'écrire » */
+@keyframes rebond {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-8px); }
+}
+.ecrit {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 30px;
+}
+.ecrit span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2E75B6;
+  animation: rebond 1.2s ease-in-out infinite;
+}
+.ecrit span:nth-child(2) { animation-delay: 0.2s; }
+.ecrit span:nth-child(3) { animation-delay: 0.4s; }
+
+/* 4. Liste : fondu l'un après l'autre (0,15 s d'écart) */
+@keyframes fondu {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.liste {
+  list-style: none;
+  padding: 0;
+  max-width: 300px;
+  margin: 0 auto 30px;
+}
+.liste li {
+  background: #fff;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  opacity: 0;
+  animation: fondu 0.5s ease-out forwards; /* forwards = reste visible */
+}
+.liste li:nth-child(1) { animation-delay: 0s; }
+.liste li:nth-child(2) { animation-delay: 0.15s; }
+.liste li:nth-child(3) { animation-delay: 0.3s; }
+.liste li:nth-child(4) { animation-delay: 0.45s; }
+
+/* 5. Pastille de notification qui pulse */
+@keyframes pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.15); }
+}
+.notification {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  margin: 0 auto;
+  text-align: center;
+  background: #e53935;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+  animation: pulse 0.8s ease-in-out infinite alternate;
+}
+
+/* 6. Accessibilité : réduire les animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* Sans animation, les éléments de la liste doivent rester visibles */
+  .liste li { opacity: 1; }
+}

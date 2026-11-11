@@ -1,0 +1,94 @@
+/* ============================================================
+   Exercice 3 — Corrections (code corrigé + explication des erreurs)
+   ============================================================ */
+
+body { font-family: Arial, Helvetica, sans-serif; padding: 30px; background: #f4f7fb; }
+section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+h2 { margin-top: 0; font-size: 1rem; }
+
+/* 1. Le bouton change de couleur en douceur, à l'aller et au retour */
+/* ERREUR : la transition était déclarée dans :hover, donc elle ne s'applique
+   qu'à l'aller. Au retour, l'état normal n'a pas de transition : le changement
+   est brutal. CORRECTION : mettre la transition sur l'état de base. */
+.bouton {
+  background-color: #2E75B6;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+.bouton:hover { background-color: #1F3864; }
+
+/* 2. Le sous-menu apparaît en fondu au survol du menu */
+/* ERREUR : display n'est pas animable (pas de valeurs intermédiaires entre
+   none et block), donc « transition: display » ne fait rien.
+   CORRECTION : opacity (animable) + visibility (masque et rend non cliquable).
+   visibility est animable de façon discrète : elle bascule au bon moment. */
+.menu { display: inline-block; position: relative; padding: 10px 20px; background: #2E75B6; color: #fff; }
+.sous-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: #1F3864;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.sous-menu li { padding: 8px 14px; list-style: none; }
+.menu:hover .sous-menu { opacity: 1; visibility: visible; }
+
+/* 3. Au survol, l'icône s'agrandit ET tourne */
+/* ERREUR : deux déclarations « transform » : la seconde écrase la première,
+   seule la rotation s'applique. CORRECTION : une seule déclaration
+   qui combine les deux fonctions. */
+.icone {
+  display: inline-block;
+  font-size: 2rem;
+  transition: transform 0.3s;
+}
+.icone:hover { transform: scale(1.2) rotate(15deg); }
+
+/* 4. La carte apparaît en fondu au chargement */
+/* ERREUR : le nom dans animation (« apparaitre ») ne correspond pas au nom
+   du @keyframes (« apparition ») : l'animation est introuvable.
+   CORRECTION : utiliser exactement le même nom. */
+@keyframes apparition { from { opacity: 0; } to { opacity: 1; } }
+.carte {
+  background: #eaf2fb;
+  padding: 20px;
+  border-radius: 8px;
+  animation: apparition 0.5s ease-out;
+}
+
+/* 5. Le cercle de chargement tourne sans fin */
+/* ERREUR : aucune durée n'est donnée (0s par défaut) : l'animation ne
+   s'exécute pas visiblement. CORRECTION : ajouter une durée (ex. 1s). */
+@keyframes tourner { to { transform: rotate(360deg); } }
+.cercle {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #d5dde8;
+  border-top-color: #2E75B6;
+  border-radius: 50%;
+  animation: tourner 1s linear infinite;
+}
+
+/* 6. L'aiguille fait un tour complet */
+/* ERREUR : rotate(360) sans unité est invalide (il faut deg, turn, rad...).
+   La déclaration est ignorée et rien ne tourne. CORRECTION : 360deg. */
+@keyframes tour { to { transform: rotate(360deg); } }
+.aiguille {
+  width: 4px;
+  height: 60px;
+  background: #e53935;
+  transform-origin: bottom center;
+  margin: 10px 0 0 40px;
+  animation: tour 2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
